@@ -1,252 +1,142 @@
-# 🌍 TH-PM2.5-Machine-Learning-Analysis
+# การวิเคราะห์ปัจจัยพหุที่มีอิทธิพลต่อมลพิษทางอากาศ (PM2.5) ในประเทศไทยด้วยเทคนิคการเรียนรู้ของ Machine Learning
 
-**Thai PM2.5 Air Quality Prediction using Machine Learning**
-
-วิเคราะห์และพยากรณ์ระดับมลพิษทางอากาศ PM2.5 ในประเทศไทย ด้วยการใช้เทคนิค Machine Learning
-
----
-
-## 📋 Table of Contents
-- [Project Overview](#project-overview)
-- [Objectives](#objectives)
-- [Dataset](#dataset)
-- [Technologies](#technologies)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Results](#results)
-- [Author](#author)
+**Multi-Factor Analysis of Air Pollution (PM2.5) Inflation in Thailand Using Machine Learning Techniques**  
+โครงการวิจัยเชิงบูรณาการเพื่อวิเคราะห์และพยากรณ์ความสัมพันธ์เชิงลึกระหว่างดานประชากรศาสตร์ การคมนาคม อุตสาหกรรม และภูมิอากาศ ต่อการสะสมตัวของฝุ่นละอองขนาดเล็กไม่เกิน 2.5 ไมครอน (PM2.5) ในประเทศไทย
 
 ---
 
-## 📊 Project Overview
+## 📌 At a Glance
+* **รายวิชา:** CSD3201 การพัฒนาโปรแกรมประยุกต์สำหรับอุปกรณ์เคลื่อนที่
+* **สถาบัน:** สาขาวิชาวิทยาการคอมพิวเตอร์และนวัตกรรมข้อมูล คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภฏสวนสนนทา
+* **ชุดข้อมูล:** ข้อมูลบูรณาการรายเดือนครอบคลุมระยะเวลา 5 ปี (พ.ศ. 2563-2567) จากเว็บไซต์หน่วยงานภาครัฐ 4 แหล่ง
+* **ผลลัพธ์สำคัญ:** ปัจจัยทางอุตุนิยมวิทยา (ปริมาณน้ำฝน ความชื้นสัมพัทธ์ ความเร็วลม) มีความสัมพันธ์ทางลบอย่างมีนัยสำคัญกับการสะสมตัวของฝุ่น ในขณะที่อุณหภูมิและปัจจัยเมือง (ประชากร, รถยนต์, โรงงานใหม่) เป็นตัวแปรเร่งปฏิกิริยาหลักในชั้นบรรยากาศ
 
-โปรเจกต์นี้เป็นการศึกษา **การวิเคราะห์ปัจจัยพหุที่มีอิทธิพลต่อมลพิษทางอากาศ (PM2.5)** ในประเทศไทย 
-โดยใช้เทคนิคการเรียนรู้ของเครื่อง (Machine Learning) เพื่อ:
+---
 
-✅ ระบุปัจจัยหลักที่มีผลต่อระดับ PM2.5  
-✅ สร้างโมเดลพยากรณ์ที่มีความแม่นยำสูง  
-✅ วิเคราะห์แนวโน้มมลพิษอากาศในประเทศไทย  
-✅ เตรียมข้อมูลเพื่อการตัดสินใจด้านนโยบายสิ่งแวดล้อม
+## 📑 Table of Contents
+- [Project Overview](#-project-overview)
+- [Objectives](#-objectives)
+- [Dataset & Features](#-dataset--features)
+- [Technologies & Libraries](#-technologies--libraries)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Usage Guide](#-usage-guide)
+- [Key Research Findings](#-key-research-findings)
+- [How to Improve](#-how-to-improve)
+- [Project Authors](#-project-authors)
+
+---
+
+## 🔍 Project Overview
+ในปัจจุบันประเทศไทยกำลังเผชิญกับวิกฤตการณ์ทางสิ่งแวดล้อมจากปัญหาฝุ่นละออง PM2.5 ซึ่งส่งผลกระทบอย่างรุนแรงต่อสุขภาวะของประชาชนในระยะยาว เพิ่มความเสี่ยงโรคระบบทางเดินหายใจและหลอดเลือดหัวใจ รวมถึงส่งผลกระทบเชิงลบต่อระบบเศรษฐกิจและการท่องเที่ยว 
+
+เนื่องจากแหล่งกำเนิดมลพิษมีความซับซ้อนและกระจายตัวอยู่ทั่วประเทศ โครงการวิจัยนี้จึงมุ่งเน้นการใช้แนวทางวิทยาการข้อมูล (Data Science) และการเรียนรู้ของเครื่อง (Machine Learning) มาวิเคราะห์ความสัมพันธ์เชิงลึกโดยพิจารณาทั้งในมุมของ **"ตัวก่อ"** (กิจกรรมเมือง) และ **"ตัวช่วยชะล้าง"** (ปัจจัยทางธรรมชาติ) ไปพร้อมกันเพื่อความเข้าใจที่ครอบคลุมและแม่นยำ
 
 ---
 
 ## 🎯 Objectives
-
-1. **Data Collection & Preprocessing**
-   - รวบรวมข้อมูล PM2.5 จากหลายพื้นที่ในประเทศไทย
-   - ทำความสะอาดข้อมูล (Data Cleaning)
-   - จัดการค่าที่ขาดหายไป (Missing Values)
-
-2. **Exploratory Data Analysis (EDA)**
-   - วิเคราะห์การกระจายตัวของข้อมูล
-   - ระบุความสัมพันธ์ระหว่างตัวแปร
-   - สร้างกราฟและภาพประกอบ
-
-3. **Feature Engineering**
-   - คัดเลือกลักษณะข้อมูลที่สำคัญ
-   - สร้างลักษณะข้อมูลใหม่ที่เป็นประโยชน์
-   - ปรับขนาดข้อมูล (Scaling & Normalization)
-
-4. **Model Development**
-   - ทดลองใช้อัลกอริทึมต่างๆ เช่น:
-     - Linear Regression
-     - Random Forest
-     - Gradient Boosting
-     - Support Vector Machine
-   - ประเมินประสิทธิภาพโมเดล
-   - ปรับแต่งไฮเปอร์พารามิเตอร์ (Hyperparameter Tuning)
-
-5. **Model Evaluation & Validation**
-   - ใช้เมตริกต่างๆ: MSE, RMSE, R², MAE
-   - Cross-Validation
-   - การทดสอบกับชุดข้อมูลทดสอบ
+1. **Data Integration & Preprocessing:** รวบรวมและทำความสะอาดข้อมูลดิบ (Data Cleaning) จัดการค่าสูญหาย และลดความสับสนของข้อมูลอุตุนิยมวิทยาผ่านกระบวนการ Data Preprocessing อย่างเป็นระบบ
+2. **Exploratory Data Analysis (EDA):** ศึกษารูปแบบการกระจายตัวของฝุ่น PM2.5 และวิเคราะห์สัมประสิทธิ์สหสัมพันธ์ (Correlation) ร่วมกับปัจจัยเมืองและภูมิอากาศ
+3. **Model Development:** พัฒนาและเปรียบเทียบโมเดลการเรียนรู้ของเครื่องเพื่อคาดการณ์ความเข้มข้นของมลพิษทางอากาศ
+4. **Policy Decision Support:** สร้างชุดข้อมูลเชิงประจักษ์เพื่อสนับสนุนการตัดสินใจและวางนโยบายการจัดการสิ่งแวดล้อมเชิงพื้นที่
 
 ---
 
-## 📁 Dataset
+## 📊 Dataset & Features
+ชุดข้อมูลผ่านการบูรณาการข้อมูลดิบรายเดือนเชิงพื้นที่จากเว็บไซต์ภาครัฐอย่างน้อย 4 แหล่งข้อมูล ได้แก่ **กรมควบคุมมลพิษ, กรมอุตุนิยมวิทยา, กรมการขนส่งทางบก และกรมโรงงานอุตสาหกรรม**
 
-- **Source**: ข้อมูล PM2.5 จากประเทศไทย
-- **Size**: ตั้งแต่ปีกี่ถึงปีกี่ (ระบุตามข้อมูลจริง)
-- **Features**: ตัวแปรต้น เช่น ความชื้น อุณหภูมิ ความกดอากาศ ฯลฯ
-- **Target**: PM2.5 (ค่าความเข้มข้นของฝุ่นละอองขนาดเล็ก)
-- **Location**: `/Data_Set/` directory
+### 1. ข้อมูลคุณลักษณะ (Features)
+* `Year` / `Month` / `Province`: ข้อมูลระบุเวลาและเชิงพื้นที่
+* `Total_Population`: จำนวนประชากรและความหนาแน่น ดัชนีชี้วัดกิจกรรมทางเศรษฐกิจและการขยายตัวของการก่อสร้าง
+* `Total_Vehicles`: ปริมาณรถยนต์จดทะเบียนสะสม สะท้อนอัตราการใช้เชื้อเพลิงฟอสซิลที่ก่อให้เกิดไอเสีย
+* `New_Factories`: จำนวนโรงงานอุตสาหกรรมที่ประกอบกิจการใหม่หรือขยายตัว ดัชนีการปลดปล่อยมลพิษจากปล่องควัน
+* `Rainfall`: ปริมาณน้ำฝนสะสม ปัจจัยทางธรรมชาติในการชะล้างฝุ่นละอองในอากาศ
+
+### 2. ตัวแปรเป้าหมาย (Target)
+* `PM2.5`: ค่าเฉลี่ยความเข้มข้นของฝุ่นละอองขนาดเล็กไม่เกิน 2.5 ไมครอน
 
 ---
 
 ## 🛠 Technologies & Libraries
-
-| Category | Tools |
-|----------|-------|
+| หมวดหมู่ | เครื่องมือที่เลือกใช้ |
+| :--- | :--- |
 | **Language** | Python 3.8+ |
-| **Notebook** | Jupyter Notebook |
-| **Data Processing** | pandas, numpy |
-| **Data Visualization** | matplotlib, seaborn, plotly |
-| **Machine Learning** | scikit-learn |
-| **Statistical Analysis** | scipy, statsmodels |
+| **Environment** | Jupyter Notebook |
+| **Data Processing** | Pandas, NumPy |
+| **Data Visualization** | Matplotlib, Seaborn, Plotly |
+| **Machine Learning** | Scikit-learn (Linear Regression, Random Forest, Gradient Boosting, SVM) |
+| **Statistical Analysis** | SciPy, StatsModels |
 
 ---
 
 ## 📂 Project Structure
-
-```
+```text
 TH-PM2.5-Machine-Learning-Analysis/
-├── Data_Set/                          # ชุดข้อมูล
-│   ├── raw_data.csv                   # ข้อมูลดิบ
-│   └── processed_data.csv             # ข้อมูลที่ประมวลผลแล้ว
-│
-├── re prove/                          # ผลลัพธ์และทดลอง
-│   ├── model_results.pkl
-│   └── predictions.csv
-│
-├── TH-PM2.5-ML-Analysis.ipynb         # Notebook หลัก
-├── requirements.txt                   # Dependencies
-├── .gitignore                         # Git ignore configuration
-└── README.md                          # ไฟล์นี้
-```
-
----
-
-## 🚀 Installation
-
-### Prerequisites
-- Python 3.8 หรือสูงกว่า
-- pip หรือ conda
-
-### Setup
-
-1. **Clone Repository**
-```bash
-git clone https://github.com/Munumpa/TH-PM2.5-Machine-Learning-Analysis.git
+├── Data_Set/                           # ไดเรกทอรีเก็บข้อมูลโครงการ
+│   ├── Final_AirQuality_Dataset.csv    # ข้อมูลดิบที่รวมรวมจากการ Preprocessing
+│   ├── AirQuality_Final.csv            # ข้อมูลสมบูรณ์ที่พร้อมสำหรับการ Train โมเดล
+│   ├── Cleaned_PM25_MonthlyV3.csv      # ข้อมูล PM2.5 จำแนกรายเดือนเชิงพื้นที่
+│   └── Cleaned_Rainfall_Monthly.csv    # ข้อมูลปริมาณน้ำฝนเชิงสถิติรายเดือน
+├── re prove/                           # โมเดลและผลลัพธ์การทดลอง
+│   ├── model_results.pkl               # ตัวแบบที่ผ่านการ Tuning แล้ว
+│   └── predictions.csv                 # ผลการทำ Prediction ของชุดข้อมูลทดสอบ
+├── TH-PM2.5-ML-Analysis.ipynb          # Jupyter Notebook หลักในการวิเคราะห์และรันโมเดล
+├── requirements.txt                    # รายการ Library และ Dependencies
+├── .gitignore                          # ไฟล์ตั้งค่าการสัญจรของ Git
+└── README.md                           # เอกสารอธิบายโครงการวิจัยฉบับนี้
+💻 Installation
+1. Prerequisites
+Python 3.8 หรือสูงกว่า
+pip หรือระบบจัดการแพ็กเกจ conda
+2. Setup Step-by-Step
+# 1. Clone Repository
+git clone [https://github.com/Munumpa/TH-PM2.5-Machine-Learning-Analysis.git](https://github.com/Munumpa/TH-PM2.5-Machine-Learning-Analysis.git)
 cd TH-PM2.5-Machine-Learning-Analysis
-```
 
-2. **Create Virtual Environment** (Recommended)
-```bash
-# Using venv
+# 
+```2. Create Virtual Environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # สำหรับ Windows ใช้: venv\Scripts\activate
 
-# หรือ using conda
-conda create -n pm25_ml python=3.9
-conda activate pm25_ml
-```
-
-3. **Install Dependencies**
-```bash
+# 3. Install Dependencies
 pip install -r requirements.txt
-```
 
-4. **Run Jupyter Notebook**
-```bash
+# 4. Open Environment
 jupyter notebook
-```
+📖 Usage Guide
+เปิดไฟล์ TH-PM2.5-ML-Analysis.ipynb ผ่านทางหน้าต่าง Jupyter Workspace
+ดำเนินการรันคำสั่งตามลำดับโครงสร้างหลักของ Notebook ดังนี้:
+Section 1: Data Loading & Exploration
+Section 2: Data Preprocessing & Cleaning (การจัดการค่าว่างและการกรองข้อมูลตัวแปรต้น)
+Section 3: Feature Engineering & Scaling
+Section 4: Exploratory Data Analysis (EDA) เพื่อหากราฟสหสัมพันธ์
+Section 5: Model Training & Hyperparameter Tuning
+Section 6: Predictions & Evaluation Metrics
+หากต้องการตรวจสอบผลการประเมินแบบ Cross-Validation ให้ตรวจสอบค่าพารามิเตอร์ใน Section 5
+📈 Key Research Findings
+> ### ⚠️ Critical Insights จากงานวิจัย
+>
+> * **อิทธิพลทางฤดูกาล:** ค่าเฉลี่ยความเข้มข้นของฝุ่น PM2.5 ในแต่ละฤดูกาลมีความแตกต่างกันอย่างมีนัยสำคัญทางสถิติกดระดับ 0.05 โดย **"ฤดูร้อน" มีค่าเฉลี่ยความเข้มข้นสูงที่สุดและเกินค่ามาตรฐาน**
+> * **ความสัมพันธ์ทางธรรมชาติ (สหสัมพันธ์ทางลบ):** ความชื้นสัมพัทธ์ ปริมาณน้ำฝน และความเร็วลม มีความสัมพันธ์ทางลบกับฝุ่น PM2.5 เนื่องจากเป็นปัจจัยช่วยกระจายและชะล้างมลพิษ
+> * **ความสัมพันธ์เชิงความร้อน (สหสัมพันธ์ทางบวก):** อุณหภูมิมีความสัมพันธ์ทางบวกกับระดับความเข้มข้นของ PM2.5 (ยกเว้นในช่วงฤดูหนาว)
+> * **ขีดความสามารถในการคาดการณ์:** เมื่อนำปัจจัยด้านอุตุนิยมวิทยาและปัจจัยเมืองมาวิเคราะห์ร่วมกันผ่านตัวแบบสถิติและการเรียนรู้ของเครื่อง จะสามารถร่วมกันคาดการณ์และอธิบายความแปรผันของความเข้มข้น PM2.5 ได้ถึง **61.2%**
+🔍 How to Improve
+1
 
----
+เพิ่มมิติตัวแปรด้านทิศทางลม ความกดอากาศ และความหนาแน่นของจุดความร้อน (Hotspots) จากภาคเกษตรกรรมและป่าไม้12
 
-## 📖 Usage
+นำเทคนิคตัวแบบขั้นสูงกลุ่ม Deep Learning (เช่น LSTM สำหรับข้อมูลอนุกรมเวลา) มาทดสอบเพื่อเปรียบเทียบประสิทธิภาพ234
 
-### Step-by-Step Guide
+พัฒนาเว็บแอปพลิเคชันหรือโปรแกรมประยุกต์สำหรับอุปกรณ์เคลื่อนที่เพื่อพยากรณ์และเตือนภัยกลุ่มเสี่ยง (เช่น ผู้สูงอายุ) ในพื้นที่นิคมอุตสาหกรรมแบบ Real-time34
+👥 Project Authors
+คณะผู้จัดทำ (สาขาวิชาวิทยาการคอมพิวเตอร์และนวัตกรรมข้อมูล)3
+นายนันทพงศ์ พันธ์เนียม | เลขประจำตัว 661222500453
+นายธนากร สินธุสอาด | เลขประจำตัว 661222500703
+อาจารย์ผู้ลงความเห็นและประเมินผลโครงการ5
+กลยณฏฐ์ กหลาบเพชรทอง
+📧 Contact Email: tanakorn9687@gmail.com
 
-1. **Open Notebook**
-   - เปิดไฟล์ `TH-PM2.5-ML-Analysis.ipynb` ใน Jupyter Notebook
-
-2. **Run All Cells**
-   - กดปุ่ม "Cell" → "Run All" หรือ Shift+Ctrl+Enter
-
-3. **Explore Results**
-   - ดูผลการวิเคราะห์ และกราฟ
-   - ตรวจสอบประสิทธิภาพโมเดล
-
-### Key Sections
-
-```
-1. Data Loading & Exploration
-2. Data Preprocessing & Cleaning
-3. Feature Engineering
-4. Exploratory Data Analysis (EDA)
-5. Model Training & Evaluation
-6. Predictions & Visualization
-```
-
----
-
-## 📊 Results
-
-### Model Performance Metrics
-
-| Model | RMSE | MAE | R² Score |
-|-------|------|-----|----------|
-| Linear Regression | - | - | - |
-| Random Forest | - | - | - |
-| Gradient Boosting | - | - | - |
-| SVM | - | - | - |
-
-*Note: ให้อัปเดตผลลัพธ์จริงจากโปรเจกต์ของคุณ*
-
-### Key Findings
-
-- ปัจจัยหลักที่มีผลต่อ PM2.5:
-  - [ปัจจัยที่ 1]
-  - [ปัจจัยที่ 2]
-  - [ปัจจัยที่ 3]
-
-- แนวโน้มมลพิษ:
-  - [สรุปผล 1]
-  - [สรุปผล 2]
-
----
-
-## 📈 Visualization Examples
-
-### PM2.5 Distribution
-![Distribution](https://via.placeholder.com/500x300?text=PM2.5+Distribution)
-
-### Feature Correlation
-![Correlation](https://via.placeholder.com/500x300?text=Feature+Correlation)
-
-### Model Performance
-![Performance](https://via.placeholder.com/500x300?text=Model+Performance)
-
----
-
-## 🔍 How to Improve
-
-- [ ] เพิ่มข้อมูลจากแหล่งข้อมูลอื่น
-- [ ] ทดลองใช้ Deep Learning Models
-- [ ] Ensemble Methods
-- [ ] Real-time prediction API
-
----
-
-## 📚 References
-
-- [Scikit-learn Documentation](https://scikit-learn.org/)
-- [Pandas Documentation](https://pandas.pydata.org/)
-- [Thailand Air Quality Data](https://www.thaiaqi.com/)
-
----
-
-## 👨‍💻 Author
-
-**Munumpa**  
-📧 Email: [your-email@example.com]  
-🔗 GitHub: [@Munumpa](https://github.com/Munumpa)  
-📌 Portfolio: [your-portfolio-link]
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! ยินดีรับ Pull Requests และ Issues
-
----
-
-**Last Updated:** August 2026  
-⭐ If you find this helpful, please star the repository!
+🔗 Project GitHub: Munumpa Profile
+📄 License
+This project is open-source and registered under the MIT License.
+Last Updated: Aug 17, 2026
